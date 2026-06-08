@@ -1,0 +1,269 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Hanken+Grotesk:wght@400;500;600;700&display=swap');
+
+.aspen{
+  --paper:#F6F1E7; --paper2:#FBF7EF; --card:#FFFFFF;
+  --ink:#1B2620; --ink2:#5C6660; --line:#E8E0D0;
+  --green:#173D2E; --green2:#235741; --brass:#A9772F; --brass2:#C6A06A;
+  --good:#2C7A56;
+  font-family:'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif;
+  color:var(--ink); -webkit-font-smoothing:antialiased; line-height:1.5;
+}
+.aspen *{box-sizing:border-box; margin:0;}
+.aspen .app{
+  min-height:680px; border-radius:18px; overflow:hidden;
+  background:
+    radial-gradient(900px 420px at 12% -8%, rgba(35,87,65,.10), transparent 60%),
+    radial-gradient(700px 360px at 108% 4%, rgba(169,119,47,.10), transparent 55%),
+    var(--paper);
+  border:1px solid var(--line);
+}
+
+/* Header */
+.aspen .hdr{display:flex; align-items:center; justify-content:space-between; padding:18px 28px; border-bottom:1px solid var(--line);}
+.aspen .brand{display:flex; align-items:baseline; gap:9px;}
+.aspen .logo{width:26px; height:26px; border-radius:8px; background:var(--green); display:grid; place-items:center; transform:translateY(4px);}
+.aspen .logo-mark{width:11px; height:11px; border-radius:50% 50% 50% 2px; background:var(--brass2); rotate:45deg;}
+.aspen .brand-name{font-family:'Fraunces',serif; font-size:21px; font-weight:600; letter-spacing:.01em;}
+.aspen .brand-tag{font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--ink2);}
+.aspen .hdr-right{display:flex; align-items:center; gap:16px;}
+.aspen .secure{display:inline-flex; align-items:center; gap:5px; font-size:12px; color:var(--green2); font-weight:500;}
+.aspen .step-count{font-size:12px; color:var(--ink2); padding-left:16px; border-left:1px solid var(--line);}
+
+.aspen .mprog{display:none; height:3px; background:var(--line);}
+.aspen .mprog span{display:block; height:100%; background:var(--green); transition:width .5s cubic-bezier(.4,0,.1,1);}
+
+.aspen .layout{display:grid; grid-template-columns:312px 1fr;}
+
+/* Rail */
+.aspen .rail{border-right:1px solid var(--line); background:linear-gradient(180deg, var(--paper2), transparent);}
+.aspen .rail-inner{padding:28px 24px; position:sticky; top:0;}
+.aspen .rail-kicker, .aspen .sum-kicker{font-size:11px; letter-spacing:.15em; text-transform:uppercase; color:var(--ink2); margin-bottom:16px;}
+.aspen .stepper{list-style:none; padding:0; display:flex; flex-direction:column;}
+.aspen .stp{display:flex; gap:13px; padding:9px 0; align-items:center; position:relative; cursor:default;}
+.aspen .stp::before{content:''; position:absolute; left:14px; top:30px; bottom:-9px; width:1.5px; background:var(--line);}
+.aspen .stp:last-child::before{display:none;}
+.aspen .stp.done::before{background:var(--green2);}
+.aspen .node{width:29px; height:29px; border-radius:50%; display:grid; place-items:center; flex:0 0 auto; background:var(--card); border:1.5px solid var(--line); color:var(--ink2); z-index:1; transition:.3s;}
+.aspen .stp.done .node{background:var(--green); border-color:var(--green); color:#fff;}
+.aspen .stp.current{cursor:default;}
+.aspen .stp.current .node{border-color:var(--brass); color:var(--brass); box-shadow:0 0 0 4px rgba(169,119,47,.12);}
+.aspen .stp.done{cursor:pointer;}
+.aspen .stp-label{display:block; font-size:14px; font-weight:500; line-height:1.2;}
+.aspen .stp.todo .stp-label{color:var(--ink2);}
+.aspen .stp-sub{display:block; font-size:11.5px; color:var(--ink2); margin-top:1px;}
+
+.aspen .summary{margin-top:26px; padding:18px; border-radius:14px; background:var(--green); color:#EDEFE9;}
+.aspen .summary .sum-kicker{color:rgba(237,239,233,.6); margin-bottom:8px;}
+.aspen .sum-amt{font-family:'Fraunces',serif; font-size:30px; font-weight:600; color:#fff; letter-spacing:.01em;}
+.aspen .sum-grid{margin-top:14px; display:flex; flex-direction:column; gap:9px;}
+.aspen .sum-grid > div{display:flex; justify-content:space-between; font-size:13px; color:rgba(237,239,233,.78);}
+.aspen .sum-grid b{color:#fff; font-weight:500;}
+.aspen .sum-emi{padding-top:9px; border-top:1px solid rgba(255,255,255,.14);}
+.aspen .sum-emi b{color:var(--brass2);}
+
+/* Panel */
+.aspen .panel{padding:44px 52px;}
+.aspen .step-body{display:flex; flex-direction:column; min-height:520px;}
+.aspen .sh{margin-bottom:26px;}
+.aspen .sh-kicker{font-size:12px; letter-spacing:.15em; text-transform:uppercase; color:var(--brass); font-weight:600; margin-bottom:8px;}
+.aspen .sh-title{font-family:'Fraunces',serif; font-size:32px; font-weight:500; line-height:1.1; letter-spacing:-.01em;}
+.aspen .sh-lead{margin-top:11px; font-size:15px; color:var(--ink2); max-width:46ch;}
+
+/* Animations */
+.aspen .anim > *{animation:rise .5s both;}
+.aspen .anim > *:nth-child(2){animation-delay:.05s;}
+.aspen .anim > *:nth-child(3){animation-delay:.10s;}
+.aspen .anim > *:nth-child(4){animation-delay:.15s;}
+.aspen .anim > *:nth-child(5){animation-delay:.20s;}
+@keyframes rise{from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:none;}}
+
+/* Offer */
+.aspen .offer{display:grid; grid-template-columns:1fr 1fr; gap:24px; padding:26px; border-radius:16px; background:var(--card); border:1px solid var(--line); box-shadow:0 14px 40px -28px rgba(23,61,46,.4);}
+.aspen .offer-k{font-size:13px; color:var(--ink2);}
+.aspen .offer-amt{font-family:'Fraunces',serif; font-size:48px; font-weight:600; color:var(--green); line-height:1; margin:6px 0;}
+.aspen .offer-sub{font-size:13px; color:var(--ink2);}
+.aspen .offer-list{list-style:none; padding:0; display:flex; flex-direction:column; gap:11px; border-left:1px solid var(--line); padding-left:24px;}
+.aspen .offer-list li{display:flex; gap:9px; align-items:center; font-size:14px;}
+.aspen .offer-list svg{color:var(--good); flex:0 0 auto;}
+.aspen .micro{margin-top:18px; font-size:13px; color:var(--ink2);}
+
+/* Loan */
+.aspen .amt-display{font-family:'Fraunces',serif; font-size:46px; font-weight:600; color:var(--green); text-align:center; margin:6px 0 18px;}
+.aspen .slider{-webkit-appearance:none; width:100%; height:7px; border-radius:6px; outline:none; cursor:pointer;}
+.aspen .slider::-webkit-slider-thumb{-webkit-appearance:none; width:24px; height:24px; border-radius:50%; background:var(--green); border:4px solid var(--paper2); box-shadow:0 2px 10px rgba(23,61,46,.5); cursor:grab;}
+.aspen .slider::-moz-range-thumb{width:22px; height:22px; border-radius:50%; background:var(--green); border:4px solid var(--paper2); cursor:grab;}
+.aspen .slider-ends{display:flex; justify-content:space-between; font-size:12px; color:var(--ink2); margin-top:8px;}
+.aspen .grid2{display:grid; grid-template-columns:1fr 1fr; gap:16px 20px; margin-top:24px;}
+
+.aspen .emi-card{margin-top:26px; display:grid; grid-template-columns:repeat(3,1fr); border-radius:14px; overflow:hidden; border:1px solid var(--line); background:var(--card);}
+.aspen .emi-card > div{padding:18px; display:flex; flex-direction:column; gap:5px;}
+.aspen .emi-card > div + div{border-left:1px solid var(--line);}
+.aspen .emi-card svg{color:var(--brass);}
+.aspen .emi-card span{font-size:12px; color:var(--ink2);}
+.aspen .emi-card b{font-family:'Fraunces',serif; font-size:21px; font-weight:600; color:var(--green);}
+
+/* Fields */
+.aspen .field{display:flex; flex-direction:column; gap:7px;}
+.aspen .field.full{grid-column:1 / -1;}
+.aspen .flabel{font-size:12px; font-weight:600; letter-spacing:.02em; color:var(--ink); text-transform:uppercase; font-size:11px; letter-spacing:.08em;}
+.aspen .fhint{font-size:12px; color:var(--ink2);}
+.aspen input[type=text], .aspen input:not([type]), .aspen input[type=email], .aspen input[type=date], .aspen select{
+  font-family:inherit; font-size:15px; color:var(--ink); padding:12px 14px; border:1px solid var(--line);
+  border-radius:10px; background:var(--card); outline:none; transition:.2s; width:100%;
+}
+.aspen input:focus, .aspen select:focus{border-color:var(--green2); box-shadow:0 0 0 4px rgba(35,87,65,.10);}
+.aspen input::placeholder{color:#B6AE9C;}
+
+.aspen .chips{display:flex; gap:9px; flex-wrap:wrap;}
+.aspen .chip{font-family:inherit; font-size:13.5px; padding:9px 15px; border-radius:999px; border:1px solid var(--line); background:var(--card); color:var(--ink2); cursor:pointer; transition:.2s;}
+.aspen .chip:hover{border-color:var(--green2);}
+.aspen .chip.on{background:var(--green); border-color:var(--green); color:#fff;}
+
+/* Documents */
+.aspen .drops{display:grid; grid-template-columns:repeat(3,1fr); gap:16px;}
+.aspen .drop{border:1.5px dashed var(--line); border-radius:14px; padding:24px 16px; text-align:center; background:var(--card); transition:.2s; cursor:pointer;}
+.aspen .drop:hover{border-color:var(--green2); background:var(--paper2);}
+.aspen .drop svg{color:var(--brass); margin-bottom:8px;}
+.aspen .drop-t{font-size:14px; font-weight:600;}
+.aspen .drop-s{font-size:12px; color:var(--ink2); margin:4px 0 12px;}
+.aspen .drop-btn{display:inline-block; font-size:12.5px; font-weight:500; color:var(--green2); border-bottom:1px solid var(--green2); padding-bottom:1px;}
+
+/* Review */
+.aspen .review{border:1px solid var(--line); border-radius:14px; overflow:hidden; background:var(--card);}
+.aspen .rrow{display:grid; grid-template-columns:1fr auto 30px; align-items:center; padding:13px 18px; font-size:14px;}
+.aspen .rrow + .rrow{border-top:1px solid var(--line);}
+.aspen .rrow span{color:var(--ink2);}
+.aspen .rrow b{font-weight:600; text-align:right;}
+.aspen .edit{justify-self:end; width:26px; height:26px; border-radius:7px; border:1px solid var(--line); background:var(--paper2); color:var(--ink2); cursor:pointer; display:grid; place-items:center;}
+.aspen .edit:hover{color:var(--green2); border-color:var(--green2);}
+.aspen .otp-zone{margin-top:22px;}
+.aspen .otp-label{font-size:13px; color:var(--ink2); margin-bottom:10px;}
+.aspen .otp{display:flex; gap:11px;}
+.aspen .otp input{width:54px; height:60px; text-align:center; font-family:'Fraunces',serif; font-size:24px; font-weight:600;}
+.aspen .consent{display:flex; gap:11px; align-items:flex-start; margin-top:22px; font-size:13.5px; color:var(--ink2); cursor:pointer;}
+.aspen .consent input{display:none;}
+.aspen .cbox{width:20px; height:20px; border-radius:6px; border:1.5px solid var(--line); flex:0 0 auto; margin-top:1px; display:grid; place-items:center; transition:.2s;}
+.aspen .cbox[data-checked=true]{background:var(--green); border-color:var(--green);}
+.aspen .consent a{color:var(--green2); text-decoration:underline; cursor:pointer;}
+
+/* Actions */
+.aspen .actions{margin-top:auto; padding-top:30px; display:flex; justify-content:space-between; align-items:center;}
+.aspen .btn{font-family:inherit; font-size:14.5px; font-weight:600; display:inline-flex; align-items:center; gap:7px; padding:13px 22px; border-radius:11px; border:1px solid transparent; cursor:pointer; transition:.2s;}
+.aspen .btn.primary{background:var(--green); color:#fff;}
+.aspen .btn.primary:hover{background:var(--green2); transform:translateY(-1px); box-shadow:0 10px 24px -12px rgba(23,61,46,.7);}
+.aspen .btn.ghost{background:transparent; color:var(--ink2); border-color:var(--line);}
+.aspen .btn.ghost:hover{color:var(--ink); border-color:var(--ink2);}
+
+/* Success */
+.aspen .success{text-align:center; padding-top:30px; display:flex; flex-direction:column; align-items:center;}
+.aspen .suc-orb{width:78px; height:78px; border-radius:50%; background:var(--green); color:#fff; display:grid; place-items:center; margin-bottom:20px; box-shadow:0 0 0 8px rgba(35,87,65,.10); animation:pop .5s both;}
+@keyframes pop{from{transform:scale(.6); opacity:0;} to{transform:scale(1); opacity:1;}}
+.aspen .success .sh-title{margin:2px 0;}
+.aspen .success .sh-lead{margin-left:auto; margin-right:auto; text-align:center;}
+.aspen .suc-card{margin-top:26px; width:100%; max-width:440px; border:1px solid var(--line); border-radius:14px; background:var(--card); overflow:hidden;}
+.aspen .suc-card > div{display:flex; justify-content:space-between; padding:14px 18px; font-size:14px;}
+.aspen .suc-card > div + div{border-top:1px solid var(--line);}
+.aspen .suc-card span{color:var(--ink2);}
+.aspen .suc-card b{font-weight:600;}
+.aspen .pill{font-size:12px; padding:3px 10px; border-radius:999px; background:rgba(169,119,47,.14); color:var(--brass);}
+
+/* Floating + call */
+.aspen .float-call{position:absolute; right:22px; bottom:22px; font-family:inherit; font-size:13px; font-weight:600; display:inline-flex; align-items:center; gap:7px; padding:11px 16px; border-radius:999px; border:1px solid var(--line); background:var(--card); color:var(--green2); cursor:pointer; box-shadow:0 14px 36px -18px rgba(23,61,46,.5); transition:.2s;}
+.aspen .float-call:hover{transform:translateY(-2px); border-color:var(--green2);}
+
+.aspen .call-dock{position:fixed; right:22px; bottom:22px; z-index:30; pointer-events:none; animation:fade .25s both;}
+.aspen .call-dock .call-card{pointer-events:auto;}
+.aspen .call-dock .call-card.active{max-height:56vh; overflow-y:auto;}
+/* While a call is docked, reserve room so the bottom action buttons clear the card. */
+.aspen.call-open .panel{padding-bottom:62vh;}
+@keyframes fade{from{opacity:0;} to{opacity:1;}}
+.aspen .call-card{width:330px; background:var(--paper2); border-radius:22px; padding:30px 26px; text-align:center; box-shadow:0 40px 80px -30px rgba(0,0,0,.5); animation:rise .35s both;}
+.aspen .orb{width:84px; height:84px; border-radius:50%; margin:0 auto 16px; background:var(--green); color:#fff; display:grid; place-items:center; position:relative;}
+.aspen .orb .ring{position:absolute; inset:0; border-radius:50%; border:2px solid var(--brass2); animation:pulse 2s ease-out infinite;}
+.aspen .orb .ring.r2{animation-delay:1s;}
+@keyframes pulse{0%{transform:scale(1); opacity:.7;} 100%{transform:scale(1.7); opacity:0;}}
+.aspen .call-name{font-family:'Fraunces',serif; font-size:20px; font-weight:600;}
+.aspen .call-status{font-size:13px; color:var(--ink2); margin-top:2px;}
+.aspen .call-ctx{font-size:14px; color:var(--green2); margin:14px 0; padding:0 6px; line-height:1.45;}
+.aspen .call-btns{display:flex; justify-content:center; gap:40px; margin-top:8px;}
+.aspen .cbtn{width:58px; height:58px; border-radius:50%; border:none; color:#fff; cursor:pointer; display:grid; place-items:center; transition:.2s;}
+.aspen .cbtn:hover{transform:scale(1.06);}
+.aspen .cbtn.accept{background:var(--good); animation:wiggle 1.4s ease-in-out infinite;}
+.aspen .cbtn.decline{background:#C0413E;}
+@keyframes wiggle{0%,100%{transform:rotate(0);}25%{transform:rotate(-12deg);}75%{transform:rotate(12deg);}}
+.aspen .call-hint{font-size:12px; color:var(--ink2); margin-top:18px;}
+
+.aspen .call-card.active{width:360px; text-align:left;}
+.aspen .incall-top{display:flex; align-items:center; gap:12px;}
+.aspen .orb.sm{width:44px; height:44px; margin:0;}
+.aspen .call-timer{font-size:12.5px; color:var(--ink2);}
+.aspen .live-dot{margin-left:auto; width:9px; height:9px; border-radius:50%; background:#C0413E; box-shadow:0 0 0 0 rgba(192,65,62,.5); animation:blink 1.5s infinite;}
+@keyframes blink{0%{box-shadow:0 0 0 0 rgba(192,65,62,.5);}70%{box-shadow:0 0 0 7px rgba(192,65,62,0);}}
+.aspen .ctx-banner{margin:16px 0; display:flex; align-items:center; gap:7px; font-size:12.5px; padding:9px 12px; border-radius:9px; background:rgba(169,119,47,.12); color:var(--brass);}
+.aspen .ctx-banner b{color:var(--green2);}
+.aspen .wave{display:flex; align-items:center; justify-content:center; gap:5px; height:46px; margin:6px 0 16px;}
+.aspen .wave span{width:4px; height:10px; border-radius:3px; background:var(--green2); animation:eq 1s ease-in-out infinite;}
+@keyframes eq{0%,100%{height:8px;}50%{height:34px;}}
+.aspen .transcript{display:flex; flex-direction:column; gap:8px; margin-bottom:18px;}
+.aspen .bubble{font-size:13px; padding:9px 12px; border-radius:12px; max-width:88%; line-height:1.4;}
+.aspen .bubble .who{display:block; font-size:10px; letter-spacing:.1em; text-transform:uppercase; opacity:.6; margin-bottom:2px;}
+.aspen .bubble.ai{background:var(--card); border:1px solid var(--line); align-self:flex-start;}
+.aspen .bubble.me{background:var(--green); color:#EDEFE9; align-self:flex-end;}
+.aspen .cbtn.end{width:auto; height:auto; border-radius:11px; padding:12px 18px; background:#C0413E; font-family:inherit; font-size:14px; font-weight:600; gap:8px; width:100%;}
+
+@media (max-width:880px){
+  .aspen .layout{grid-template-columns:1fr;}
+  .aspen .rail{display:none;}
+  .aspen .mprog{display:block;}
+  .aspen .panel{padding:30px 22px;}
+  .aspen .offer, .aspen .grid2, .aspen .drops, .aspen .emi-card{grid-template-columns:1fr;}
+  .aspen .offer-list{border-left:none; padding-left:0; border-top:1px solid var(--line); padding-top:18px;}
+  .aspen .sh-title{font-size:27px;}
+  .aspen .call-dock{left:12px; right:12px; bottom:12px;}
+  .aspen .call-dock .call-card, .aspen .call-dock .call-card.active{width:auto;}
+}
+
+
+
+
+/* Call actions: prominent green talk CTA, slim End beneath it */
+.aspen .call-actions{display:flex; flex-direction:column; gap:8px; margin-top:6px;}
+
+.aspen .talk-btn{
+  width:100%; display:flex; align-items:center; justify-content:center; gap:8px;
+  border:none; border-radius:12px; padding:14px 16px;
+  font-family:inherit; font-size:15px; font-weight:600; color:#fff;
+  background:var(--green); cursor:pointer;
+  user-select:none; -webkit-user-select:none; touch-action:none;
+  transition:filter .15s, transform .05s;
+}
+.aspen .talk-btn:hover{filter:brightness(1.12);}
+.aspen .talk-btn:active{transform:scale(.99);}
+.aspen .talk-btn.recording{background:#C0413E; animation:talkpulse 1.1s ease-in-out infinite;}
+@keyframes talkpulse{0%,100%{opacity:1;}50%{opacity:.65;}}
+
+.aspen .cbtn.end{
+  width:100%; height:auto; border-radius:12px; padding:11px 16px;
+  display:flex; align-items:center; justify-content:center; gap:8px;
+  background:transparent; color:#C0413E; border:1px solid #E6CFCD;
+  font-family:inherit; font-size:13.5px; font-weight:600; cursor:pointer;
+  transition:background .15s;
+}
+/* .aspen .cbtn.end:hover{background:rgba(192,65,62,.07);} */
+
+.aspen .call-actions{display:flex; gap:10px; margin-top:4px;}
+.aspen .mute-btn{
+  flex:1; display:flex; align-items:center; justify-content:center; gap:7px;
+  border-radius:12px; padding:12px 14px; font-family:inherit; font-size:13.5px; font-weight:600;
+  background:var(--card); color:var(--ink2); border:1px solid var(--line); cursor:pointer; transition:.15s;
+}
+.aspen .mute-btn:hover{border-color:var(--green2); color:var(--ink);}
+.aspen .mute-btn.on{background:rgba(192,65,62,.08); color:#C0413E; border-color:#E6CFCD;}
+.aspen .cbtn.end{
+  flex:1; width:auto; height:auto; border-radius:12px; padding:12px 14px;
+  display:flex; align-items:center; justify-content:center; gap:7px;
+  background:#C0413E; color:#fff; font-family:inherit; font-size:13.5px; font-weight:600; cursor:pointer;
+}
+.aspen .cbtn.end:hover{filter:brightness(1.07);}
+.aspen .wave span{animation-play-state:paused;}
+.aspen .wave.on span{animation-play-state:running;}
