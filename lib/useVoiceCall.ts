@@ -18,13 +18,19 @@ export function useVoiceCall({ sessionId, callState, step, form, onClose }: Args
   const [muted, setMuted] = useState(false);
   const transportRef = useRef<Transport | null>(null);
 
-  const stepRef = useRef(step); stepRef.current = step;
-  const formRef = useRef(form); formRef.current = form;
+  // Keep the latest step/form in refs so the connect effect can read fresh values
+  // at connect time WITHOUT listing them as deps (which would reconnect on every
+  // keystroke). Updated in an effect, not during render. Declared before the
+  // connect effect so the refs are current when a call starts on the same commit.
+  const stepRef = useRef(step);
+  const formRef = useRef(form);
+  useEffect(() => {
+    stepRef.current = step;
+    formRef.current = form;
+  }, [step, form]);
 
   useEffect(() => {
     if (callState !== 'active' || !sessionId) return;
-    setTranscript([]);
-    setMuted(false);
     const t = createTransport('browser', {
       onTranscript: (line) => setTranscript((prev) => [...prev, line]),
       onStatus: setStatus,
@@ -35,7 +41,10 @@ export function useVoiceCall({ sessionId, callState, step, form, onClose }: Args
     return () => {
       t.close();
       transportRef.current = null;
+      // Reset on teardown so the next call starts fresh (cleanup setState is fine).
       setStatus('idle');
+      setTranscript([]);
+      setMuted(false);
     };
   }, [callState, sessionId, onClose]);
 

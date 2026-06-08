@@ -1,9 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Hanken+Grotesk:wght@400;500;600;700&display=swap');
 
 .aspen{
-  --paper:#F6F1E7; --paper2:#FBF7EF; --card:#FFFFFF;
-  --ink:#1B2620; --ink2:#5C6660; --line:#E8E0D0;
-  --green:#173D2E; --green2:#235741; --brass:#A9772F; --brass2:#C6A06A;
+  /* Mahindra Finance theme. Token names are kept from the original Aspen palette
+     so every usage re-skins at once: --green* is now the Mahindra red primary,
+     --brass* the navy accent, --paper* clean greys. --good stays success-green. */
+  --paper:#F4F5F7; --paper2:#FFFFFF; --card:#FFFFFF;
+  --ink:#1A2235; --ink2:#5A6478; --line:#E3E6EC;
+  --green:#E11B22; --green2:#B5141A; --brass:#1B3A6B; --brass2:#5E86C7;
   --good:#2C7A56;
   font-family:'Hanken Grotesk', ui-sans-serif, system-ui, sans-serif;
   color:var(--ink); -webkit-font-smoothing:antialiased; line-height:1.5;
@@ -12,8 +15,8 @@
 .aspen .app{
   min-height:680px; border-radius:18px; overflow:hidden;
   background:
-    radial-gradient(900px 420px at 12% -8%, rgba(35,87,65,.10), transparent 60%),
-    radial-gradient(700px 360px at 108% 4%, rgba(169,119,47,.10), transparent 55%),
+    radial-gradient(900px 420px at 12% -8%, rgba(225,27,34,.08), transparent 60%),
+    radial-gradient(700px 360px at 108% 4%, rgba(27,58,107,.08), transparent 55%),
     var(--paper);
   border:1px solid var(--line);
 }
@@ -46,7 +49,7 @@
 .aspen .node{width:29px; height:29px; border-radius:50%; display:grid; place-items:center; flex:0 0 auto; background:var(--card); border:1.5px solid var(--line); color:var(--ink2); z-index:1; transition:.3s;}
 .aspen .stp.done .node{background:var(--green); border-color:var(--green); color:#fff;}
 .aspen .stp.current{cursor:default;}
-.aspen .stp.current .node{border-color:var(--brass); color:var(--brass); box-shadow:0 0 0 4px rgba(169,119,47,.12);}
+.aspen .stp.current .node{border-color:var(--brass); color:var(--brass); box-shadow:0 0 0 4px rgba(27,58,107,.14);}
 .aspen .stp.done{cursor:pointer;}
 .aspen .stp-label{display:block; font-size:14px; font-weight:500; line-height:1.2;}
 .aspen .stp.todo .stp-label{color:var(--ink2);}
@@ -78,7 +81,7 @@
 @keyframes rise{from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:none;}}
 
 /* Offer */
-.aspen .offer{display:grid; grid-template-columns:1fr 1fr; gap:24px; padding:26px; border-radius:16px; background:var(--card); border:1px solid var(--line); box-shadow:0 14px 40px -28px rgba(23,61,46,.4);}
+.aspen .offer{display:grid; grid-template-columns:1fr 1fr; gap:24px; padding:26px; border-radius:16px; background:var(--card); border:1px solid var(--line); box-shadow:0 14px 40px -28px rgba(26,34,53,.35);}
 .aspen .offer-k{font-size:13px; color:var(--ink2);}
 .aspen .offer-amt{font-family:'Fraunces',serif; font-size:48px; font-weight:600; color:var(--green); line-height:1; margin:6px 0;}
 .aspen .offer-sub{font-size:13px; color:var(--ink2);}
@@ -90,7 +93,7 @@
 /* Loan */
 .aspen .amt-display{font-family:'Fraunces',serif; font-size:46px; font-weight:600; color:var(--green); text-align:center; margin:6px 0 18px;}
 .aspen .slider{-webkit-appearance:none; width:100%; height:7px; border-radius:6px; outline:none; cursor:pointer;}
-.aspen .slider::-webkit-slider-thumb{-webkit-appearance:none; width:24px; height:24px; border-radius:50%; background:var(--green); border:4px solid var(--paper2); box-shadow:0 2px 10px rgba(23,61,46,.5); cursor:grab;}
+.aspen .slider::-webkit-slider-thumb{-webkit-appearance:none; width:24px; height:24px; border-radius:50%; background:var(--green); border:4px solid var(--paper2); box-shadow:0 2px 10px rgba(225,27,34,.45); cursor:grab;}
 .aspen .slider::-moz-range-thumb{width:22px; height:22px; border-radius:50%; background:var(--green); border:4px solid var(--paper2); cursor:grab;}
 .aspen .slider-ends{display:flex; justify-content:space-between; font-size:12px; color:var(--ink2); margin-top:8px;}
 .aspen .grid2{display:grid; grid-template-columns:1fr 1fr; gap:16px 20px; margin-top:24px;}
@@ -111,7 +114,7 @@
   font-family:inherit; font-size:15px; color:var(--ink); padding:12px 14px; border:1px solid var(--line);
   border-radius:10px; background:var(--card); outline:none; transition:.2s; width:100%;
 }
-.aspen input:focus, .aspen select:focus{border-color:var(--green2); box-shadow:0 0 0 4px rgba(35,87,65,.10);}
+.aspen input:focus, .aspen select:focus{border-color:var(--green2); box-shadow:0 0 0 4px rgba(225,27,34,.10);}
 .aspen input::placeholder{color:#B6AE9C;}
 
 .aspen .chips{display:flex; gap:9px; flex-wrap:wrap;}
@@ -150,13 +153,17 @@
 .aspen .actions{margin-top:auto; padding-top:30px; display:flex; justify-content:space-between; align-items:center;}
 .aspen .btn{font-family:inherit; font-size:14.5px; font-weight:600; display:inline-flex; align-items:center; gap:7px; padding:13px 22px; border-radius:11px; border:1px solid transparent; cursor:pointer; transition:.2s;}
 .aspen .btn.primary{background:var(--green); color:#fff;}
-.aspen .btn.primary:hover{background:var(--green2); transform:translateY(-1px); box-shadow:0 10px 24px -12px rgba(23,61,46,.7);}
+.aspen .btn.primary:hover{background:var(--green2); transform:translateY(-1px); box-shadow:0 10px 24px -12px rgba(225,27,34,.55);}
 .aspen .btn.ghost{background:transparent; color:var(--ink2); border-color:var(--line);}
 .aspen .btn.ghost:hover{color:var(--ink); border-color:var(--ink2);}
+.aspen .resume-note{margin-top:14px; width:100%; text-align:left; font-family:inherit; font-size:13.5px; font-weight:600; color:var(--green2); background:rgba(225,27,34,.06); border:1px solid rgba(225,27,34,.22); border-radius:11px; padding:11px 14px; cursor:pointer; transition:.2s;}
+.aspen .resume-note:hover{background:rgba(225,27,34,.10); transform:translateY(-1px);}
+.aspen .btn:disabled,.aspen .btn[aria-disabled="true"]{opacity:.45; cursor:not-allowed; transform:none; box-shadow:none;}
+.aspen .btn.primary:disabled:hover,.aspen .btn.primary[aria-disabled="true"]:hover{background:var(--green); transform:none; box-shadow:none;}
 
 /* Success */
 .aspen .success{text-align:center; padding-top:30px; display:flex; flex-direction:column; align-items:center;}
-.aspen .suc-orb{width:78px; height:78px; border-radius:50%; background:var(--green); color:#fff; display:grid; place-items:center; margin-bottom:20px; box-shadow:0 0 0 8px rgba(35,87,65,.10); animation:pop .5s both;}
+.aspen .suc-orb{width:78px; height:78px; border-radius:50%; background:var(--green); color:#fff; display:grid; place-items:center; margin-bottom:20px; box-shadow:0 0 0 8px rgba(225,27,34,.10); animation:pop .5s both;}
 @keyframes pop{from{transform:scale(.6); opacity:0;} to{transform:scale(1); opacity:1;}}
 .aspen .success .sh-title{margin:2px 0;}
 .aspen .success .sh-lead{margin-left:auto; margin-right:auto; text-align:center;}
@@ -165,10 +172,10 @@
 .aspen .suc-card > div + div{border-top:1px solid var(--line);}
 .aspen .suc-card span{color:var(--ink2);}
 .aspen .suc-card b{font-weight:600;}
-.aspen .pill{font-size:12px; padding:3px 10px; border-radius:999px; background:rgba(169,119,47,.14); color:var(--brass);}
+.aspen .pill{font-size:12px; padding:3px 10px; border-radius:999px; background:rgba(27,58,107,.12); color:var(--brass);}
 
 /* Floating + call */
-.aspen .float-call{position:absolute; right:22px; bottom:22px; font-family:inherit; font-size:13px; font-weight:600; display:inline-flex; align-items:center; gap:7px; padding:11px 16px; border-radius:999px; border:1px solid var(--line); background:var(--card); color:var(--green2); cursor:pointer; box-shadow:0 14px 36px -18px rgba(23,61,46,.5); transition:.2s;}
+.aspen .float-call{position:absolute; right:22px; bottom:22px; font-family:inherit; font-size:13px; font-weight:600; display:inline-flex; align-items:center; gap:7px; padding:11px 16px; border-radius:999px; border:1px solid var(--line); background:var(--card); color:var(--green2); cursor:pointer; box-shadow:0 14px 36px -18px rgba(225,27,34,.4); transition:.2s;}
 .aspen .float-call:hover{transform:translateY(-2px); border-color:var(--green2);}
 
 .aspen .call-dock{position:fixed; right:22px; bottom:22px; z-index:30; pointer-events:none; animation:fade .25s both;}
@@ -199,7 +206,7 @@
 .aspen .call-timer{font-size:12.5px; color:var(--ink2);}
 .aspen .live-dot{margin-left:auto; width:9px; height:9px; border-radius:50%; background:#C0413E; box-shadow:0 0 0 0 rgba(192,65,62,.5); animation:blink 1.5s infinite;}
 @keyframes blink{0%{box-shadow:0 0 0 0 rgba(192,65,62,.5);}70%{box-shadow:0 0 0 7px rgba(192,65,62,0);}}
-.aspen .ctx-banner{margin:16px 0; display:flex; align-items:center; gap:7px; font-size:12.5px; padding:9px 12px; border-radius:9px; background:rgba(169,119,47,.12); color:var(--brass);}
+.aspen .ctx-banner{margin:16px 0; display:flex; align-items:center; gap:7px; font-size:12.5px; padding:9px 12px; border-radius:9px; background:rgba(27,58,107,.10); color:var(--brass);}
 .aspen .ctx-banner b{color:var(--green2);}
 .aspen .wave{display:flex; align-items:center; justify-content:center; gap:5px; height:46px; margin:6px 0 16px;}
 .aspen .wave span{width:4px; height:10px; border-radius:3px; background:var(--green2); animation:eq 1s ease-in-out infinite;}

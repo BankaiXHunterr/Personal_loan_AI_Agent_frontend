@@ -10,7 +10,7 @@ export function Header({ step }: Props) {
     <header className="hdr">
       <div className="brand">
         <span className="logo"><span className="logo-mark" /></span>
-        <span className="brand-name">Aspen</span>
+        <span className="brand-name">Mahindra Finance</span>
         <span className="brand-tag">personal loans</span>
       </div>
       <div className="hdr-right">

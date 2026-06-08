@@ -133,7 +133,7 @@
 //               <Success data={data} emi={emi} />
 //             ) : (
 //               <div className="step-body" key={currentId}>
-//                 {currentId === 'offer'      && <OfferStep data={data} emi={emi} />}
+//                 {currentId === 'offer'      && <OfferStep data={data} emi={emi} set={set} resumeLabel={resumeLabel} onResume={onResume} />}
 //                 {currentId === 'loan'       && <LoanStep data={data} set={set} emi={emi} total={totalPayable} />}
 //                 {currentId === 'about'      && <AboutStep data={data} set={set} />}
 //                 {currentId === 'employment' && <EmploymentStep data={data} set={set} />}
@@ -204,6 +204,8 @@ import { useEffect, useMemo, useState, useCallback } from 'react';
 import { ChevronLeft, ChevronRight, PhoneCall } from 'lucide-react';
 import { STEPS, RATE } from '@/lib/steps';
 import { calcEMI } from '@/lib/format';
+import { isValidMobile, isValidName } from '@/lib/validation';
+import { getApplicant, registerApplicant, saveProgress, markLeft, type ApplicantRecord } from '@/lib/session';
 import type { CallState, FormData } from '@/lib/types';
 import { useIdleTimer } from '@/lib/useIdleTimer';
 import { useVoiceCall } from '@/lib/useVoiceCall';
@@ -266,6 +268,53 @@ export function LoanApplication() {
   const totalPayable = emi * data.tenure;
   const currentId = STEPS[step].id;
 
+  // The offer screen now captures the applicant's name + mobile (the mobile is
+  // their identity for the whole journey), so the very first step can't be passed
+  // until both are valid.
+  const offerReady = isValidName(data.fullName) && isValidMobile(data.mobile);
+  const nextBlocked = step === 0 && !offerReady;
+
+  // Resume: when a returning user types a known number on the offer screen, we
+  // look them up (debounced) and offer to jump back to where they left off.
+  const [resume, setResume] = useState<ApplicantRecord | null>(null);
+  useEffect(() => {
+    if (step !== 0 || !isValidMobile(data.mobile)) return;
+    let cancelled = false;
+    const t = setTimeout(async () => {
+      const rec = await getApplicant(data.mobile);
+      if (cancelled) return;
+      // Only offer resume if there's real saved progress past the offer screen.
+      setResume(rec && rec.step && rec.step !== 'offer' ? rec : null);
+    }, 500);
+    return () => {
+      cancelled = true;
+      clearTimeout(t);
+    };
+  }, [step, data.mobile]);
+
+  const onResume = useCallback(() => {
+    setResume((rec) => {
+      if (!rec) return null;
+      setData((d) => ({
+        ...d,
+        ...rec.form,
+        fullName: rec.full_name ?? d.fullName,
+        mobile: d.mobile, // keep what they just typed as the canonical key
+      }));
+      const idx = STEPS.findIndex((s) => s.id === rec.step);
+      if (idx > 0) setStep(idx);
+      void registerApplicant(rec.phone, rec.full_name ?? '');
+      return null;
+    });
+  }, []);
+
+  // Show the resume offer only while the typed number is still the valid one we
+  // matched, so an edit-to-invalid hides a now-stale banner.
+  const resumeLabel =
+    resume && isValidMobile(data.mobile)
+      ? STEPS.find((s) => s.id === resume.step)?.label ?? null
+      : null;
+
   const acceptCall = useCallback(() => {
     setCallSecs(0);
     setCallState('active');
@@ -306,7 +355,34 @@ export function LoanApplication() {
     return () => clearInterval(i);
   }, [callState]);
 
+  // Persist progress continuously as the form is filled (debounced), independent
+  // of any call. This is what makes resume work when the user just fills the form
+  // and comes back later. Only once they're past the offer and identified.
+  useEffect(() => {
+    if (done || step === 0 || !isValidMobile(data.mobile)) return;
+    const t = setTimeout(() => {
+      void saveProgress(data.mobile, currentId, data);
+    }, 800);
+    return () => clearTimeout(t);
+  }, [done, step, currentId, data]);
+
+  // If the applicant leaves/closes the page mid-application, flag it so the
+  // backend can place a Twilio call after a grace period. Only once they're past
+  // the offer (registered) and have a valid number, and not after they've finished.
+  // pagehide is the reliable "page is going away" signal; markLeft uses sendBeacon
+  // so it survives the teardown.
+  useEffect(() => {
+    if (done || step === 0 || !isValidMobile(data.mobile)) return;
+    const onHide = () => markLeft(data.mobile);
+    window.addEventListener('pagehide', onHide);
+    return () => window.removeEventListener('pagehide', onHide);
+  }, [done, step, data.mobile]);
+
   const next = () => {
+    if (nextBlocked) return;
+    // Accepting the offer registers the applicant (phone = identity) so their
+    // progress can be tracked and resumed from here on.
+    if (step === 0) void registerApplicant(data.mobile, data.fullName);
     if (step < STEPS.length - 1) setStep((s) => s + 1);
     else setDone(true);
   };
@@ -335,7 +411,7 @@ export function LoanApplication() {
               <Success data={data} emi={emi} />
             ) : (
               <div className="step-body" key={currentId}>
-                {currentId === 'offer'      && <OfferStep data={data} emi={emi} />}
+                {currentId === 'offer'      && <OfferStep data={data} emi={emi} set={set} resumeLabel={resumeLabel} onResume={onResume} />}
                 {currentId === 'loan'       && <LoanStep data={data} set={set} emi={emi} total={totalPayable} />}
                 {currentId === 'about'      && <AboutStep data={data} set={set} />}
                 {currentId === 'employment' && <EmploymentStep data={data} set={set} />}
@@ -360,7 +436,12 @@ export function LoanApplication() {
                   ) : (
                     <span />
                   )}
-                  <button className="btn primary" onClick={next}>
+                  <button
+                    className="btn primary"
+                    onClick={next}
+                    disabled={nextBlocked}
+                    aria-disabled={nextBlocked}
+                  >
                     {step === 0
                       ? 'Accept & continue'
                       : step === STEPS.length - 1
