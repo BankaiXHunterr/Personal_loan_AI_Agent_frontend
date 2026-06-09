@@ -47,7 +47,7 @@ export function AssistantCall({
       {callState === 'incoming' ? (
         <div className="call-card">
           <div className="orb"><span className="ring" /><span className="ring r2" /><PhoneCall size={26} /></div>
-          <p className="call-name">Aspen Assistant</p>
+          <p className="call-name">AI Assistant</p>
           <p className="call-status">Incoming call…</p>
           <p className="call-ctx">{CONTEXT_LINE[currentId]}</p>
           <div className="call-btns">
@@ -61,7 +61,7 @@ export function AssistantCall({
           <div className="incall-top">
             <div className="orb sm"><span className="ring" /><PhoneCall size={18} /></div>
             <div>
-              <p className="call-name">Aspen Assistant</p>
+              <p className="call-name">AI Assistant</p>
               <p className="call-timer">On call · {mmss}</p>
             </div>
             <span className="live-dot" />
